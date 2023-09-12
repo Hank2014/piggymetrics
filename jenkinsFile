@@ -14,7 +14,7 @@ pipeline {
             }
         }
         
-        stage('readSCM'){
+        stage('read SCM'){
             steps{
                 script{
                     def dCompose = readFile('docker-compose.yml')
@@ -23,16 +23,21 @@ pipeline {
                 }
             }
         }
-        /* stage('SCM') {
-           checkout([$class: 'GitSCM', branches: [[name: '*\/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url:'https://github.com/Hank2014/piggymetrics']]]);
-        }
-        stage('build'){
-            dockerImage = docker.build('imageName/abc');    
-        }
-        stage('push'){
-            docker.withRegistry('','testHan'){
-                dockerImage.push();
+		stage('Build with Maven') {
+            steps {
+                script {
+                    sh 'mvn package -DskipTests'
+                }
             }
-        }*/
+        }
+        
+		stage('Start Docker Compose') {
+            steps {
+                script {
+                    sh 'docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d'
+                }
+            }
+        }
+	
     }
 }
