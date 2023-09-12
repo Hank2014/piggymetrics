@@ -8,13 +8,13 @@ pipeline {
     }
     
     stages {
-        stage('checkout'){
+        /*stage('checkout'){
             steps{
                 checkout scm
             }
-        }
+        }*/
         
-        stage('read SCM'){
+        /*stage('read SCM'){
             steps{
                 script{
                     def dCompose = readFile('docker-compose.yml')
@@ -22,7 +22,8 @@ pipeline {
                     echo "Content of yml: \n ${dCompose}"
                 }
             }
-        }
+        }*/
+		
 		stage('Build with Maven') {
             steps {
                 script {
