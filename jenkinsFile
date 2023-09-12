@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+    
+    tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "M3"
+        jdk "MyJDK17"
+    }
+    
+    stages {
+        stage('checkout'){
+            steps{
+                checkout scm
+            }
+        }
+        
+        stage('readSCM'){
+            steps{
+                script{
+                    def dCompose = readFile('docker-compose.yml')
+                    //def dComposeDev = readFile('docker-compose.dev.yml')
+                    //echo "Content of yml: \n ${dCompose}"
+                }
+            }
+        }
+        /* stage('SCM') {
+           checkout([$class: 'GitSCM', branches: [[name: '*\/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url:'https://github.com/Hank2014/piggymetrics']]]);
+        }
+        stage('build'){
+            dockerImage = docker.build('imageName/abc');    
+        }
+        stage('push'){
+            docker.withRegistry('','testHan'){
+                dockerImage.push();
+            }
+        }*/
+    }
+}
