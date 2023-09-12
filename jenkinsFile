@@ -18,8 +18,8 @@ pipeline {
             steps{
                 script{
                     def dCompose = readFile('docker-compose.yml')
-                    //def dComposeDev = readFile('docker-compose.dev.yml')
-                    //echo "Content of yml: \n ${dCompose}"
+                    def dComposeDev = readFile('docker-compose.dev.yml')
+                    echo "Content of yml: \n ${dCompose}"
                 }
             }
         }
